@@ -15,17 +15,13 @@ def loadData(args, img_size):
     num_cats = len(categories)
     for cat in categories:
         path_head = os.path.join(obj_cats, cat) 
-        for i in range(1, len(os.listdir(path_head))+1):
-            pad_dig = 4-len(str(i))
-            pad = '0'*pad_dig
-            file_name = 'image_' +pad+str(i)+'.jpg'
+        for file_name in os.listdir(path_head):
             path = os.path.join(path_head, file_name)
             img = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
-            print(img)
             img = cv2.resize(img, (img_size, img_size))
             output = [0]*num_cats
             output[cat_num] = 1
-            labeled_data.append((img, cat_num))
+            labeled_data.append((img, output))
         cat_num = cat_num + 1
 
     random.shuffle(labeled_data)
